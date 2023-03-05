@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fabrica.gestion.excepciones.RegistroNoEncontradoException;
 import com.fabrica.gestion.models.ProveedorModelo;
 import com.fabrica.gestion.services.ProveedorServicio;
 
@@ -33,11 +34,9 @@ public class ProveedorControlador {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<ProveedorModelo> getById(@PathVariable Long id){
-		
-		Optional<ProveedorModelo> optionalEntity = proveedorServicio.getProveedor(id);	
-		ProveedorModelo proveedor = optionalEntity.orElseThrow(()->new NoSuchElementException());
-		
-		return ResponseEntity.ok(proveedor);		
+	
+		ProveedorModelo proveedor = proveedorServicio.getProveedor(id);
+		return ResponseEntity.ok(proveedor);
 	}
 	
 	
@@ -53,10 +52,7 @@ public class ProveedorControlador {
 	public ResponseEntity<ProveedorModelo> actualizarProveedor(@PathVariable Long id, @RequestBody ProveedorModelo proveedor){
 		
 		proveedor.setId(id);
-		Optional<ProveedorModelo> optionalProveedor = proveedorServicio.updateProveedor(proveedor);
-		
-		ProveedorModelo proveedorActualizado = optionalProveedor.orElseThrow(()->new NoSuchElementException("Capturado"));
-		
+		ProveedorModelo proveedorActualizado = proveedorServicio.updateProveedor(proveedor);	
 		return ResponseEntity.ok(proveedorActualizado);			
 	}
 	
@@ -66,6 +62,8 @@ public class ProveedorControlador {
 		 
 		 return ResponseEntity.ok(proveedorServicio.deleteProveedor(id));
 	}
+	
+
 	
 	
 	

@@ -20,36 +20,44 @@ public class ProveedorServicio {
 		return (ArrayList<ProveedorModelo>) proveedorRepositorio.findAll();
 	}
 	
-	public Optional<ProveedorModelo> getProveedor(Long id) {
-		return proveedorRepositorio.findById(id);
+	public ProveedorModelo getProveedor(Long id) {
+		
+		Optional<ProveedorModelo> optionalEntity = proveedorRepositorio.findById(id);		
+		if(optionalEntity.isPresent()) {
+			return optionalEntity.get();			
+		}
+		else
+		throw new RegistroNoEncontradoException("Proveedor", id);
 	} 
 	
 	public ProveedorModelo saveProveedor(ProveedorModelo proveedor){		
 		
-		if(getProveedor(proveedor.getId()).isEmpty()) { 
+		Optional<ProveedorModelo> check = proveedorRepositorio.findById(proveedor.getId());
+		
+		if(check.isEmpty()) { 
 		return proveedorRepositorio.save(proveedor);}
 		else {
 			throw new RegistroExistenteException("Proveedor", proveedor.getId());
 		}
 	}	
 	
-	public Optional<ProveedorModelo> updateProveedor(ProveedorModelo proveedor) {	
+	public ProveedorModelo updateProveedor(ProveedorModelo proveedor) {	
 		
-		Optional <ProveedorModelo> optionalEntity = getProveedor(proveedor.getId());
+		Optional <ProveedorModelo> check = proveedorRepositorio.findById(proveedor.getId());
 		
-		if(optionalEntity.isPresent()) {
-			return Optional.of(proveedorRepositorio.save(proveedor));
+		if(check.isPresent()) {
+			return proveedorRepositorio.save(proveedor);
 		}
 		else
-		return  Optional.empty();		
+			throw new RegistroNoEncontradoException("Proveedor", proveedor.getId());
 	}
 	
 	
 	public String deleteProveedor(Long id) {
 		
-		Optional<ProveedorModelo> optionalEntity = getProveedor(id);
+		Optional<ProveedorModelo> check = proveedorRepositorio.findById(id);
 		
-		if(optionalEntity.isEmpty()) {			
+		if(check.isEmpty()) {			
 			throw new RegistroNoEncontradoException("Proveedor", id);
 		}
 		else {
