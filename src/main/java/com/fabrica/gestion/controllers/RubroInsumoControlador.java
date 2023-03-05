@@ -20,7 +20,7 @@ import com.fabrica.gestion.services.RubroInsumoServicio;
 
 @RestController
 @RequestMapping("/rubro_insumo")
-public class RubroInsumoControlador {
+public class RubroInsumoControlador implements CrudController<RubroInsumoModelo> {
 	
 	@Autowired
 	private RubroInsumoServicio rubroInsumoServicio;
@@ -38,7 +38,7 @@ public class RubroInsumoControlador {
 	}
 	
 	@PostMapping("/save")
-	public ResponseEntity<RubroInsumoModelo> saveRubroInsumo(@Valid @RequestBody RubroInsumoModelo rubroInsumo){
+	public ResponseEntity<RubroInsumoModelo> save(@Valid @RequestBody RubroInsumoModelo rubroInsumo){
 		
 		RubroInsumoModelo rubroInsumoGuardado = rubroInsumoServicio.save(rubroInsumo);
 		return ResponseEntity.ok(rubroInsumoGuardado);		
@@ -46,7 +46,7 @@ public class RubroInsumoControlador {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<RubroInsumoModelo> updateRubroInsumo(@PathVariable Long id, @RequestBody RubroInsumoModelo rubroInsumo){
+	public ResponseEntity<RubroInsumoModelo> update(@PathVariable Long id, @RequestBody RubroInsumoModelo rubroInsumo){
 		
 		rubroInsumo.setId(id);
 		RubroInsumoModelo rubroInsumoActualizado = rubroInsumoServicio.update(rubroInsumo);
@@ -55,7 +55,7 @@ public class RubroInsumoControlador {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<RubroInsumoModelo> deleteRubroInsumo(@PathVariable Long id){
+	public ResponseEntity<RubroInsumoModelo> delete(@PathVariable Long id){
 		rubroInsumoServicio.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}

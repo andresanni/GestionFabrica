@@ -17,13 +17,13 @@ import com.fabrica.gestion.services.ProveedorServicio;
 
 @RestController
 @RequestMapping("/proveedor")
-public class ProveedorControlador {
+public class ProveedorControlador implements CrudController<ProveedorModelo>{
 
 	@Autowired
 	private ProveedorServicio proveedorServicio;
 
 	@GetMapping("/all")
-	public ArrayList<ProveedorModelo> getProveedores() {
+	public ArrayList<ProveedorModelo> getAll() {
 		return proveedorServicio.getAll();
 	}
 
@@ -35,14 +35,14 @@ public class ProveedorControlador {
 	}
 
 	@PostMapping("/save")
-	public ResponseEntity<?> saveProveedor(@Valid @RequestBody ProveedorModelo proveedor) {
+	public ResponseEntity<ProveedorModelo> save(@Valid @RequestBody ProveedorModelo proveedor) {
 
 		ProveedorModelo proveedorGuardadro = proveedorServicio.save(proveedor);
 		return ResponseEntity.ok(proveedorGuardadro);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ProveedorModelo> actualizarProveedor(@PathVariable Long id,
+	public ResponseEntity<ProveedorModelo> update(@PathVariable Long id,
 			@RequestBody ProveedorModelo proveedor) {
 
 		proveedor.setId(id);
@@ -51,9 +51,11 @@ public class ProveedorControlador {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteProveedor(@PathVariable Long id) {
+	public ResponseEntity<ProveedorModelo> delete(@PathVariable Long id) {
 		proveedorServicio.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}
+
+
 
 }
