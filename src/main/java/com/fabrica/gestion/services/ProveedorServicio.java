@@ -10,17 +10,17 @@ import com.fabrica.gestion.models.ProveedorModelo;
 import com.fabrica.gestion.repositories.IProveedorRepositorio;
 
 @Service
-public class ProveedorServicio {
+public class ProveedorServicio implements CrudService<ProveedorModelo>{
 	
 	@Autowired
 	IProveedorRepositorio proveedorRepositorio;
 	
 	
-	public ArrayList<ProveedorModelo> getProveedores(){
+	public ArrayList<ProveedorModelo> getAll(){
 		return (ArrayList<ProveedorModelo>) proveedorRepositorio.findAll();
 	}
 	
-	public ProveedorModelo getProveedor(Long id) {
+	public ProveedorModelo getById(Long id) {
 		
 		Optional<ProveedorModelo> optionalEntity = proveedorRepositorio.findById(id);		
 		if(optionalEntity.isPresent()) {
@@ -30,7 +30,7 @@ public class ProveedorServicio {
 		throw new RegistroNoEncontradoException("Proveedor", id);
 	} 
 	
-	public ProveedorModelo saveProveedor(ProveedorModelo proveedor){		
+	public ProveedorModelo save(ProveedorModelo proveedor){		
 		
 		Optional<ProveedorModelo> check = proveedorRepositorio.findById(proveedor.getId());
 		
@@ -41,7 +41,7 @@ public class ProveedorServicio {
 		}
 	}	
 	
-	public ProveedorModelo updateProveedor(ProveedorModelo proveedor) {	
+	public ProveedorModelo update(ProveedorModelo proveedor) {	
 		
 		Optional <ProveedorModelo> check = proveedorRepositorio.findById(proveedor.getId());
 		
@@ -53,7 +53,7 @@ public class ProveedorServicio {
 	}
 	
 	
-	public String deleteProveedor(Long id) {
+	public void deleteById(Long id) {
 		
 		Optional<ProveedorModelo> check = proveedorRepositorio.findById(id);
 		
@@ -61,8 +61,7 @@ public class ProveedorServicio {
 			throw new RegistroNoEncontradoException("Proveedor", id);
 		}
 		else {
-		proveedorRepositorio.deleteById(id);
-		return "Registro borrado con exito";
+		proveedorRepositorio.deleteById(id);		
 		}
 	}
 	
