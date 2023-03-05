@@ -18,49 +18,42 @@ import com.fabrica.gestion.services.ProveedorServicio;
 @RestController
 @RequestMapping("/proveedor")
 public class ProveedorControlador {
-	
+
 	@Autowired
 	private ProveedorServicio proveedorServicio;
-	
-	
+
 	@GetMapping("/all")
-	public ArrayList<ProveedorModelo> getProveedores(){
+	public ArrayList<ProveedorModelo> getProveedores() {
 		return proveedorServicio.getAll();
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<ProveedorModelo> getById(@PathVariable Long id){
-	
+	public ResponseEntity<ProveedorModelo> getById(@PathVariable Long id) {
+
 		ProveedorModelo proveedor = proveedorServicio.getById(id);
 		return ResponseEntity.ok(proveedor);
 	}
-	
-	
+
 	@PostMapping("/save")
 	public ResponseEntity<?> saveProveedor(@Valid @RequestBody ProveedorModelo proveedor) {
-		
-		ProveedorModelo proveedorGuardadro = proveedorServicio.save(proveedor);
-		return ResponseEntity.ok(proveedorGuardadro);		
-	}	
-	
-	
-	@PutMapping("/{id}")
-	public ResponseEntity<ProveedorModelo> actualizarProveedor(@PathVariable Long id, @RequestBody ProveedorModelo proveedor){
-		
-		proveedor.setId(id);
-		ProveedorModelo proveedorActualizado = proveedorServicio.update(proveedor);	
-		return ResponseEntity.ok(proveedorActualizado);			
-	}
-	
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteProveedor (@PathVariable Long id){
-		proveedorServicio.deleteById(id);
-		 return ResponseEntity.noContent().build();
-	}
-	
 
-	
-	
-	
+		ProveedorModelo proveedorGuardadro = proveedorServicio.save(proveedor);
+		return ResponseEntity.ok(proveedorGuardadro);
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<ProveedorModelo> actualizarProveedor(@PathVariable Long id,
+			@RequestBody ProveedorModelo proveedor) {
+
+		proveedor.setId(id);
+		ProveedorModelo proveedorActualizado = proveedorServicio.update(proveedor);
+		return ResponseEntity.ok(proveedorActualizado);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> deleteProveedor(@PathVariable Long id) {
+		proveedorServicio.deleteById(id);
+		return ResponseEntity.noContent().build();
+	}
+
 }
