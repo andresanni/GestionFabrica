@@ -1,5 +1,7 @@
 package com.fabrica.gestion.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +27,14 @@ public class ProveedorModelo {
 	private String telefono;
 	
 	
-
+	public ProveedorModelo() {
+		
+	}
+	
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING) 
+	public ProveedorModelo(Long id) {		
+		this.id = id;
+	}
 	public Long getId() {
 		return id;
 	}

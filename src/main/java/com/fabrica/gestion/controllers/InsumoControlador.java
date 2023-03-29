@@ -42,7 +42,7 @@ public class InsumoControlador implements CrudController<InsumoModelo> {
 
 	@Override
 	@PostMapping("/save")
-	public ResponseEntity<InsumoModelo> save(@Valid @RequestBody InsumoModelo insumo) {
+	public ResponseEntity<InsumoModelo> save( @RequestBody InsumoModelo insumo) {
 		InsumoModelo insumoGuardado = insumoServico.save(insumo); 
 		return ResponseEntity.ok(insumoGuardado);
 	}

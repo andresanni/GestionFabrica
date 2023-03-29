@@ -15,7 +15,7 @@ public class InsumoModelo {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idinusmos")
+	@Column(name="idinsumos")
 	private Long id;
 	
 	@ManyToOne

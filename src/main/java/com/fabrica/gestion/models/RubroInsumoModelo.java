@@ -1,5 +1,7 @@
 package com.fabrica.gestion.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +19,16 @@ public class RubroInsumoModelo {
 	private Long id;
 	
 	private String descripcion;
+
+	
+	public RubroInsumoModelo() {	
+		
+	}
+	
+	@JsonCreator(mode= JsonCreator.Mode.DELEGATING)
+	public RubroInsumoModelo(Long id) {		
+		this.id = id;
+	}
 
 	public Long getId() {
 		return id;
